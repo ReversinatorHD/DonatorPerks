@@ -50,7 +50,7 @@ public class DonatorPerks extends JavaPlugin implements Listener{
 			Bukkit.getServer().getPluginManager().disablePlugin(this);
 		}
 		Bukkit.getServer().getPluginManager().registerEvents(this, this);
-		doBroadcast();
+		enableBroadcastTask();
 	}
 
 	@Override
