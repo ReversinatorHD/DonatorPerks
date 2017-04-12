@@ -1,0 +1,20 @@
+# Toggle /donatorperks [speed/strength/haste/nightvision] command
+toggle_command: true
+
+# Toggle donator broadcast (Default: &aOnline <rankname> Players: &r<donators>)
+toggle_broadcast: false
+
+# Edit donator broadcast group
+donator_broadcast_group: 'default'
+
+# Edit donator broadcast
+donator_broadcast_message: '&aOnline <rankname> Players: &r<donators><newline>&7This can be purchased at our store @ <storeurl>'
+
+# Edit donator rank name on broadcast
+donator_rank_name: 'Obsidian'
+
+# Edit store url on broadcast
+donation_store_url: 'http://mc-market.org/'
+
+# Edit time between each donator broadcast (in minutes)
+donator_broadcast_delay: 5

@@ -1,0 +1,10 @@
+name: DonatorPerks
+author: subbotted
+main: com.subbotted.DonatorPerks
+version: 1.0
+description: Free open-source donator plugin.
+softdepend: [Vault]
+commands:
+  donatorperks:
+    description: Core command.
+    aliases: [dp, perks, perk]
