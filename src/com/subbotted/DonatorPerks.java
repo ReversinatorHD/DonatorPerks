@@ -91,8 +91,6 @@ public class DonatorPerks extends JavaPlugin implements Listener{
 		return (permission != null);
 	}
 
-
-
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
 
@@ -107,61 +105,22 @@ public class DonatorPerks extends JavaPlugin implements Listener{
 			if(args.length == 0){
 				sender.sendMessage(ChatColor.RED + "This is an open source plugin by subbotted. Usage of this command is " + ChatColor.ITALIC + '/' + label + " [speed/strength/haste/nightvision]");
 			}else{
-
 				PotionUtils potion = new PotionUtils(player);
-				switch(args[0].toLowerCase()){ //switch instead of using if(args[0].equalsIgnoreCase(string)){} , cleaner code :)
-
-				case "speed":
-					if(!player.hasPermission("donatorperk.speed")){
+				if(potionName(args[0]) != null) {
+					if(!player.hasPermission("donatorperk." + args[0])){
 						player.sendMessage(ChatColor.RED + "You do not have permission to use this perk.");
 						return true;
 					}
-					if(!player.hasPotionEffect(PotionEffectType.SPEED)){
-						potion.addEffect(PotionEffectType.SPEED);
+					if(!player.hasPotionEffect(potionName(args[0]))){
+						potion.addEffect(potionName(args[0]));
 					}else{
-						potion.removeEffect(PotionEffectType.SPEED);
+						potion.removeEffect(potionName(args[0]));
 					}
-					sender.sendMessage((player.hasPotionEffect(PotionEffectType.SPEED) ? ChatColor.GREEN + "Enabled" : ChatColor.RED + "Disabled") + ChatColor.YELLOW + " donator perk " + ChatColor.GREEN + ChatColor.BOLD + "Speed" + ChatColor.YELLOW + '.');
-					break;
-				case "strength":
-					if(!player.hasPermission("donatorperk.strength")){
-						player.sendMessage(ChatColor.RED + "You do not have permission to use this perk.");
-						return true;
-					}
-					if(!player.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)){
-						potion.addEffect(PotionEffectType.INCREASE_DAMAGE);
-					}else{
-						potion.removeEffect(PotionEffectType.INCREASE_DAMAGE);
-					}
-					sender.sendMessage((player.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE) ? ChatColor.GREEN + "Enabled" : ChatColor.RED + "Disabled") + ChatColor.YELLOW + " donator perk " + ChatColor.RED + ChatColor.BOLD + "Strength" + ChatColor.YELLOW + '.');
-					break;
-				case "haste":
-					if(!player.hasPermission("donatorperk.haste")){
-						player.sendMessage(ChatColor.RED + "You do not have permission to use this perk.");
-						return true;
-					}
-					if(!player.hasPotionEffect(PotionEffectType.FAST_DIGGING)){
-						potion.addEffect(PotionEffectType.FAST_DIGGING);
-					}else{
-						potion.removeEffect(PotionEffectType.FAST_DIGGING);
-					}
-					sender.sendMessage((player.hasPotionEffect(PotionEffectType.FAST_DIGGING) ? ChatColor.GREEN + "Enabled" : ChatColor.RED + "Disabled") + ChatColor.YELLOW + " donator perk " + ChatColor.GOLD + ChatColor.BOLD + "Haste" + ChatColor.YELLOW + '.');
-					break;
-				case "nightvision":
-					if(!player.hasPermission("donatorperk.nightvision")){
-						player.sendMessage(ChatColor.RED + "You do not have permission to use this perk.");
-						return true;
-					}
-					if(!player.hasPotionEffect(PotionEffectType.NIGHT_VISION)){
-						potion.addEffect(PotionEffectType.NIGHT_VISION);
-					}else{
-						potion.removeEffect(PotionEffectType.NIGHT_VISION);
-					}
-					sender.sendMessage((player.hasPotionEffect(PotionEffectType.NIGHT_VISION) ? ChatColor.GREEN + "Enabled" : ChatColor.RED + "Disabled") + ChatColor.YELLOW + " donator perk " + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Night Vision" + ChatColor.YELLOW + '.');
-					break;
-				default:
-					sender.sendMessage(ChatColor.YELLOW + "Could not find donator perk " + ChatColor.DARK_RED + ChatColor.BOLD + args[0] + ChatColor.YELLOW + '.');
-					break;
+					sender.sendMessage((player.hasPotionEffect(potionName(args[0])) ? ChatColor.GREEN + "Enabled" : ChatColor.RED + "Disabled") + ChatColor.YELLOW + " donator perk " + ChatColor.GREEN + ChatColor.BOLD + args[0].substring(0, 1).toUpperCase() + args[0].substring(1) + ChatColor.YELLOW + '.');
+					return true;
+				}
+				sender.sendMessage(ChatColor.YELLOW + "Could not find donator perk " + ChatColor.DARK_RED + ChatColor.BOLD + args[0] + ChatColor.YELLOW + '.');
+				return false;
 
 				}
 
@@ -170,5 +129,20 @@ public class DonatorPerks extends JavaPlugin implements Listener{
 		}
 
 		return true;
+	}
+
+	private PotionEffectType potionName(String name) {
+		switch(name.toLowerCase()) {
+		case "speed":
+			return PotionEffectType.SPEED;
+		case "nightvision":
+			return PotionEffectType.NIGHT_VISION;
+		case "haste":
+			return PotionEffectType.FAST_DIGGING;
+		case "strength":
+			return PotionEffectType.INCREASE_DAMAGE;
+		default:
+			return null;
+		}
 	}
 }
